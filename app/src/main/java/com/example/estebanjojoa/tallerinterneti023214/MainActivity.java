@@ -71,8 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
         for(Users str : UsersList) {
             textView.append(str.getNombre() + "\n");
+            textView.append(str.getEdad()+"\n");
+            textView.append(str.getCodigo()+"\n");
             textView.append(str.getCorreo()+"\n");
             textView.append("\n");
+
         }
     }
 
