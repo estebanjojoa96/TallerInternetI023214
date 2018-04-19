@@ -6,21 +6,35 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.estebanjojoa.tallerinterneti023214.Model.Users;
 import com.example.estebanjojoa.tallerinterneti023214.Parser.Json;
 import com.example.estebanjojoa.tallerinterneti023214.URL.HttpManager;
 
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    ProgressBar progressBar;
+    TextView textView;
+
+
+    List<Users> UsersList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        progressBar=(ProgressBar)findViewById(R.id.id_pb_data);
+        textView=(TextView)findViewById(R.id.id_tv_data);
+        loadData();
 
     }
 
@@ -56,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, String.valueOf(UsersList.size()), Toast.LENGTH_SHORT).show();
 
         for(Users str : UsersList) {
-            textView.append(str.toString() + "\n");
+            textView.append(str.getNombre() + "\n");
+            textView.append(str.getCorreo()+"\n");
+            textView.append("\n");
         }
     }
 
@@ -98,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             try {
-                Users  = Json.getData(s);
+                UsersList  = Json.getData(s);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
